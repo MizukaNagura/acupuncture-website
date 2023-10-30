@@ -1,0 +1,15 @@
+{
+    "name": "Acupuncture Website",
+    "build": {
+      "dockerfile": "Dockerfile",
+      "context": "..",
+      "dockerComposeFile": "../docker-compose.yml",
+      "service": "web"
+    },
+    "runArgs": [ "--service-ports" ],
+    "settings": {
+      "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": ["ms-python.python"]
+  }
+  
