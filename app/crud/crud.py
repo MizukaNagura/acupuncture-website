@@ -2,9 +2,11 @@ from sqlalchemy.orm import Session
 from ..models.acupuncture_point import AcupuncturePoint as AcupuncturePointModel
 from ..schemas import AcupuncturePointCreate, AcupuncturePointUpdate
 
+# 特定のツボをIDによって検索し、データベースからそのツボの情報を取得します。
 def get_acupuncture_point(db: Session, point_id: int):
     return db.query(AcupuncturePointModel).filter(AcupuncturePointModel.id == point_id).first()
 
+# 複数のツボの情報を取得します。ページネーションに対応しています。
 def get_acupuncture_points(db: Session, skip: int = 0, limit: int = 10):
     return db.query(AcupuncturePointModel).offset(skip).limit(limit).all()
 
