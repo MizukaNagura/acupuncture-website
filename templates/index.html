@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ツボ検索ツール</title>
+    <link rel="stylesheet" href="/static/style.css"> <!-- CSSファイルへのリンク -->
+    <script src="/static/script.js"></script> <!-- JavaScriptファイルへのリンク -->
+</head>
+<body>
+    <h1>症状に合ったツボを見つけよう</h1>
+    <form id="symptom-form">
+        <input type="text" id="symptom" name="symptom" placeholder="症状を入力してください">
+        <button type="submit">ツボを探す</button>
+    </form>
+
+    <div id="points-list"></div> <!-- 提案されたツボを表示するエリア -->
+
+    <script>
+        // フォームの送信イベントを処理するスクリプト
+        document.getElementById('symptom-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // デフォルトのフォーム送信を防ぐ
+            const symptom = document.getElementById('symptom').value;
+            fetch(`/api/points?symptom=${symptom}`) // APIエンドポイントを呼び出す
+                .then(response => response.json())
+                .then(data => {
+                    const pointsList = document.getElementById('points-list');
+                    pointsList.innerHTML = ''; // 以前の結果をクリアする
+                    data.forEach(point => {
+                        pointsList.innerHTML += `<p>${point.name}: ${point.description}</p>`; // 各ツボの情報を追加する
+                    });
+                });
+        });
+    </script>
+</body>
+</html>
