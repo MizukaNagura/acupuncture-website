@@ -1,9 +1,16 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-#DATABASE_URL = "postgresql://user:password@db/acupuncture"  # 本番用のURL
-DATABASE_URL = "postgresql://user:password@localhost/acupuncture"  # ローカル環境用のURL
+# データベースのURLを指定します。これは環境変数から取得するか、直接文字列として記述します。
+# 例えば、PostgreSQLを使用する場合は以下のようなURLになります:
+# postgresql://<ユーザー名>:<パスワード>@<ホスト>/<データベース名>
+DATABASE_URL = "postgresql://user:password@localhost/acupuncture"
 
-
+# SQLAlchemyのエンジンを作成します。これは、データベースとの接続プールや、
+# SQLの実行を管理するためのものです。
 engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(bind=engine)
+
+# sessionmakerは、データベースセッションを作成するためのファクトリです。
+# `autocommit=False`は、自動コミットを無効にするために設定します。
+# これにより、トランザクションの明示的なコミットまたはロールバックが必要になります。
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
