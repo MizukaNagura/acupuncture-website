@@ -4,3 +4,5 @@ from app.models.schemas import (
     AcupuncturePoint,
     # 他の必要なクラスもここに追加
 )
+
+from .item import Item
